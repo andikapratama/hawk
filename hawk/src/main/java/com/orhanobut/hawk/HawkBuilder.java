@@ -26,36 +26,6 @@ public class HawkBuilder {
     this.context = context.getApplicationContext();
   }
 
-  public HawkBuilder setStorage(Storage storage) {
-    this.cryptoStorage = storage;
-    return this;
-  }
-
-  public HawkBuilder setParser(Parser parser) {
-    this.parser = parser;
-    return this;
-  }
-
-  public HawkBuilder setSerializer(Serializer serializer) {
-    this.serializer = serializer;
-    return this;
-  }
-
-  public HawkBuilder setLogInterceptor(LogInterceptor logInterceptor) {
-    this.logInterceptor = logInterceptor;
-    return this;
-  }
-
-  public HawkBuilder setConverter(Converter converter) {
-    this.converter = converter;
-    return this;
-  }
-
-  public HawkBuilder setEncryption(Encryption encryption) {
-    this.encryption = encryption;
-    return this;
-  }
-
   LogInterceptor getLogInterceptor() {
     if (logInterceptor == null) {
       logInterceptor = new LogInterceptor() {
@@ -67,11 +37,21 @@ public class HawkBuilder {
     return logInterceptor;
   }
 
+  public HawkBuilder setLogInterceptor(LogInterceptor logInterceptor) {
+    this.logInterceptor = logInterceptor;
+    return this;
+  }
+
   Storage getStorage() {
     if (cryptoStorage == null) {
       cryptoStorage = new SharedPreferencesStorage(context, STORAGE_TAG_DO_NOT_CHANGE);
     }
     return cryptoStorage;
+  }
+
+  public HawkBuilder setStorage(Storage storage) {
+    this.cryptoStorage = storage;
+    return this;
   }
 
   Converter getConverter() {
@@ -81,6 +61,11 @@ public class HawkBuilder {
     return converter;
   }
 
+  public HawkBuilder setConverter(Converter converter) {
+    this.converter = converter;
+    return this;
+  }
+
   Parser getParser() {
     if (parser == null) {
       parser = new GsonParser(new Gson());
@@ -88,14 +73,21 @@ public class HawkBuilder {
     return parser;
   }
 
+  public HawkBuilder setParser(Parser parser) {
+    this.parser = parser;
+    return this;
+  }
+
   Encryption getEncryption() {
     if (encryption == null) {
-      encryption = new ConcealEncryption(context);
-      if (!encryption.init()) {
         encryption = new NoEncryption();
-      }
     }
     return encryption;
+  }
+
+  public HawkBuilder setEncryption(Encryption encryption) {
+    this.encryption = encryption;
+    return this;
   }
 
   Serializer getSerializer() {
@@ -103,6 +95,11 @@ public class HawkBuilder {
       serializer = new HawkSerializer(getLogInterceptor());
     }
     return serializer;
+  }
+
+  public HawkBuilder setSerializer(Serializer serializer) {
+    this.serializer = serializer;
+    return this;
   }
 
   public void build() {

@@ -14,11 +14,11 @@ android {
     textReport true
     textOutput 'stdout'
   }
+  buildToolsVersion '25.0.0'
 }
 
 dependencies {
   compile deps.gson
-  compile deps.conceal
 
   testCompile deps.junit
   testCompile deps.truth
